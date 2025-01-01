@@ -1,8 +1,8 @@
 #include "../include/common.h"
 
-void scan_cpp(float *input, float *output, int count) {
+void scan_cpp(float *input, float *output, uint32_t n) {
     float acc = 0;
-    for (int i = 0; i < count; i++) {
+    for (uint32_t i = 0; i < n; i++) {
         acc += input[i];
         output[i] = acc;
     }

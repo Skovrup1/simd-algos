@@ -1,4 +1,4 @@
-export void scan_ispc(uniform float output[], uniform float input[], uniform int n) {
+export void scan_ispc(uniform float input[], uniform float output[], uniform uint32 n) {
     uniform float sum = 0;
     foreach (i = 0...n) {
         float value = input[i];
