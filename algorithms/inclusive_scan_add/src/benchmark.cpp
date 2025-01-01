@@ -1,7 +1,7 @@
 #include <benchmark/benchmark.h>
-#include <vector>
 
-#include "../include/common.h"
+#include "../../../include/common.h"
+#include "../include/declarations.h"
 
 class TestFixture : public benchmark::Fixture {
   public:

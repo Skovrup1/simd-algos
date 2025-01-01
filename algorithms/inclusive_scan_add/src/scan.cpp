@@ -1,4 +1,6 @@
-#include "../include/common.h"
+#include <cstdint>
+
+#include "../include/declarations.h"
 
 void scan_cpp(float *input, float *output, uint32_t n) {
     float acc = 0;

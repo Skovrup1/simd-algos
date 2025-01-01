@@ -1,10 +1,8 @@
 #pragma once
 
 #include <cstdint>
-#include <cstdio>
 #include <cstdlib>
-
-#include <limits>
+#include <numeric>
 #include <vector>
 
 inline std::vector<float> random_array(uint32_t n) {
@@ -22,12 +20,9 @@ inline std::vector<float> random_array(uint32_t n) {
     return vec;
 }
 
-extern "C" {
-void scan_cpp(float *input, float *output, uint32_t n);
+inline std::vector<float> iota_array(uint32_t n) {
+    std::vector<float> vec(n, 0);
+    std::iota(vec.begin(), vec.end(), 0);
 
-void scan_ispc(float *input, float *output, uint32_t n);
-
-void scan_asm(float *input, float *output, uint32_t n);
+    return vec;
 }
-
-#include "../build/scan_ispc.h"
