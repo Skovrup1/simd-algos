@@ -1,7 +1,6 @@
 #include <cmath>
 #include <cstdint>
 #include <cstdio>
-#include <vector>
 
 #include "../../../include/common.h"
 #include "../include/declarations.h"
@@ -12,15 +11,15 @@ bool compare_rel_diff(float a, float b) { return std::abs(a - b) / a < EPS; }
 
 int main() {
     uint32_t n = 100000;
-    std::vector<float> input = random_array(n);
-    // std::vector<float> input = iota_array(n);
-    std::vector<float> cpp_output = std::vector<float>(n, 0);
-    std::vector<float> ispc_output = std::vector<float>(n, 0);
-    std::vector<float> asm_output = std::vector<float>(n, 0);
+    DynArray<float> input = random_array(n);
+    // DynArray<float> input = iota_array(n);
+    DynArray<float> cpp_output(n, 0);
+    DynArray<float> ispc_output(n, 0);
+    DynArray<float> asm_output(n, 0);
 
-    scan_cpp(input.data(), cpp_output.data(), n);
-    scan_ispc(input.data(), ispc_output.data(), n);
-    scan_asm(input.data(), asm_output.data(), n);
+    scan_cpp(input.data, cpp_output.data, n);
+    scan_ispc(input.data, ispc_output.data, n);
+    scan_asm(input.data, asm_output.data, n);
 
     {
         auto [fst, snd] = std::mismatch(

@@ -10,8 +10,12 @@ BUILD_DIR="build"
 
 CXX=g++
 
-CXXFLAGS="-O0 -g"
-#CXXFLAGS="-O3"
+CXXFLAGS="-fno-exceptions"
+
+# debug
+CXXFLAGS="${CXXFLAGS} -O0 -g"
+# optimized
+CXXFLAGS="${CXXFLAGS} -O3 -march=native"
 
 ISPCFLAGS="-O3 --arch=x86-64 --target=avx2"
 

@@ -13,7 +13,7 @@ INIT_YMM avx2
     shl nq, 2                           ; n * 4
 
 .loop:
-    vmovups ymm1, [srcq + r3q] ; ymm1 = *(src + i)
+    vmovaps ymm1, [srcq + r3q] ; ymm1 = *(src + i)
 
     vpermilps ymm2, ymm1, 0x93        ; rearrange ymm1[D,A,B,C,H,E,F,G]
     vperm2f128 ymm3, ymm2, ymm2, 0x09 ; rearrange ymm2[0,0,0,0,A,B,C,D]
@@ -30,7 +30,7 @@ INIT_YMM avx2
 
     vaddps ymm1, ymm0, ymm1 ; acc + value
 
-    vmovups [dstq + r3q], ymm1 ; *(dst + i) = ymm1
+    vmovaps [dstq + r3q], ymm1 ; *(dst + i) = ymm1
 
     vextractf128 xmm0, ymm1, 1 ; extract ymm1[E..G]
     vpermilps xmm0, xmm0, 0xFF ; replicate xmm0[D]
