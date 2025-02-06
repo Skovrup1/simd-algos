@@ -10,14 +10,14 @@ int8 unpack_high_mask() {
 }
 
 // added _ since there is some weird name confict
-float _unpack_low(float &a, float &b) {
+float _unpack_low(float a, float b) {
     int8 mask = unpack_low_mask();
 
     return shuffle(a, b, mask);
 }
 
 // added _ since there is some weird name confict
-float _unpack_high(float &a, float &b) {
+float _unpack_high(float a, float b) {
     int8 mask = unpack_high_mask();
 
     return shuffle(a, b, mask);
