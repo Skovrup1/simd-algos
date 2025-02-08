@@ -24,7 +24,7 @@ float _unpack_high(float a, float b) {
 }
 
 // registers X programCount
-void transpose_8x8(uniform float data[], uniform uint32 n) {
+void transpose_16x16(uniform float data[]) {
     // tell the compiler that the data is aligned to target width
     assume(((uniform uint64)((void*)data) & (32 * TARGET_WIDTH)-1) == 0);
 
@@ -33,60 +33,117 @@ void transpose_8x8(uniform float data[], uniform uint32 n) {
         uniform int32 const pc = programCount;
 
         // note: play around with streaming loads/stores
-        float row0 = data[i];
-        float row1 = data[i + pc];
-        float row2 = data[i + pc * 2];
-        float row3 = data[i + pc * 3];
-        float row4 = data[i + pc * 4];
-        float row5 = data[i + pc * 5];
-        float row6 = data[i + pc * 6];
-        float row7 = data[i + pc * 7];
+        float p0 = data[i];
+        float p1 = data[i + pc];
+        float p2 = data[i + pc * 2];
+        float p3 = data[i + pc * 3];
+        float p4 = data[i + pc * 4];
+        float p5 = data[i + pc * 5];
+        float p6 = data[i + pc * 6];
+        float p7 = data[i + pc * 7];
+        float p8 = data[i + pc * 8];
+        float p9 = data[i + pc * 9];
+        float p10 = data[i + pc * 10];
+        float p11 = data[i + pc * 11];
+        float p12 = data[i + pc * 12];
+        float p13 = data[i + pc * 13];
+        float p14 = data[i + pc * 14];
+        float p15 = data[i + pc * 15];
 
         // k = 1
-        float temp0 = _unpack_low(row0, row4);
-        float temp1 = _unpack_low(row1, row5);
-        float temp2 = _unpack_low(row2, row6);
-        float temp3 = _unpack_low(row3, row7);
-        float temp4 = _unpack_high(row0, row4);
-        float temp5 = _unpack_high(row1, row5);
-        float temp6 = _unpack_high(row2, row6);
-        float temp7 = _unpack_high(row3, row7);
+        float a0  = _unpack_low(p0, p8);
+        float a1  = _unpack_low(p1, p9);
+        float a2  = _unpack_low(p2, p10);
+        float a3  = _unpack_low(p3, p11);
+        float a4  = _unpack_low(p4, p12);
+        float a5  = _unpack_low(p5, p13);
+        float a6  = _unpack_low(p6, p14);
+        float a7  = _unpack_low(p7, p15);
+        float a8  = _unpack_high(p0, p8);
+        float a9  = _unpack_high(p1, p9);
+        float a10 = _unpack_high(p2, p10);
+        float a11 = _unpack_high(p3, p11);
+        float a12 = _unpack_high(p4, p12);
+        float a13 = _unpack_high(p5, p13);
+        float a14 = _unpack_high(p6, p14);
+        float a15 = _unpack_high(p7, p15);
 
         // k = 2
-        row0 = _unpack_low(temp0, temp2);
-        row1 = _unpack_low(temp1, temp3);
-        row2 = _unpack_low(temp4, temp6);
-        row3 = _unpack_low(temp5, temp7);
-        row4 = _unpack_high(temp0, temp2);
-        row5 = _unpack_high(temp1, temp3);
-        row6 = _unpack_high(temp4, temp6);
-        row7 = _unpack_high(temp5, temp7);
+        float b0  = _unpack_low(a0, a8);
+        float b1  = _unpack_low(a1, a9);
+        float b2  = _unpack_low(a2, a10);
+        float b3  = _unpack_low(a3, a11);
+        float b4  = _unpack_low(a4, a12);
+        float b5  = _unpack_low(a5, a13);
+        float b6  = _unpack_low(a6, a14);
+        float b7  = _unpack_low(a7, a15);
+        float b8  = _unpack_high(a0, a8);
+        float b9  = _unpack_high(a1, a9);
+        float b10 = _unpack_high(a2, a10);
+        float b11 = _unpack_high(a3, a11);
+        float b12 = _unpack_high(a4, a12);
+        float b13 = _unpack_high(a5, a13);
+        float b14 = _unpack_high(a6, a14);
+        float b15 = _unpack_high(a7, a15);
 
         // k = 3
-        temp0 = _unpack_low(row0, row1);
-        temp4 = _unpack_low(row2, row3);
-        temp2 = _unpack_low(row4, row5);
-        temp6 = _unpack_low(row6, row7);
-        temp1 = _unpack_high(row0, row1);
-        temp5 = _unpack_high(row2, row3);
-        temp3 = _unpack_high(row4, row5);
-        temp7 = _unpack_high(row6, row7);
+        float c0  = _unpack_low(a0, a8);
+        float c1  = _unpack_low(a1, a9);
+        float c2  = _unpack_low(a2, a10);
+        float c3  = _unpack_low(a3, a11);
+        float c4  = _unpack_low(a4, a12);
+        float c5  = _unpack_low(a5, a13);
+        float c6  = _unpack_low(a6, a14);
+        float c7  = _unpack_low(a7, a15);
+        float c8  = _unpack_high(a0, a8);
+        float c9  = _unpack_high(a1, a9);
+        float c10 = _unpack_high(a2, a10);
+        float c11 = _unpack_high(a3, a11);
+        float c12 = _unpack_high(a4, a12);
+        float c13 = _unpack_high(a5, a13);
+        float c14 = _unpack_high(a6, a14);
+        float c15 = _unpack_high(a7, a15);
 
-        data[i]          = temp0;
-        data[i + pc]     = temp1;
-        data[i + pc * 2] = temp2;
-        data[i + pc * 3] = temp3;
-        data[i + pc * 4] = temp4;
-        data[i + pc * 5] = temp5;
-        data[i + pc * 6] = temp6;
-        data[i + pc * 7] = temp7;
+        // k = 4
+        float d0  = _unpack_low(c0, p8);
+        float d1  = _unpack_high(c1, p9);
+        float d2  = _unpack_low(c2, p10);
+        float d3  = _unpack_high(c3, p11);
+        float d4  = _unpack_low(c4, p12);
+        float d5  = _unpack_high(c5, p13);
+        float d6  = _unpack_low(c6, p14);
+        float d7  = _unpack_high(c7, p15);
+        float d8  = _unpack_low(c0, p8);
+        float d9  = _unpack_high(c1, p9);
+        float d10 = _unpack_low(c2, p10);
+        float d11 = _unpack_high(c3, p11);
+        float d12 = _unpack_low(c4, p12);
+        float d13 = _unpack_high(c5, p13);
+        float d14 = _unpack_low(c6, p14);
+        float d15 = _unpack_high(c7, p15);
+
+        data[i]           = d0;
+        data[i + pc]      = d1;
+        data[i + pc * 2]  = d2;
+        data[i + pc * 3]  = d3;
+        data[i + pc * 4]  = d4;
+        data[i + pc * 5]  = d5;
+        data[i + pc * 6]  = d6;
+        data[i + pc * 7]  = d7;
+        data[i + pc * 8]  = d0;
+        data[i + pc * 9]  = d1;
+        data[i + pc * 10] = d2;
+        data[i + pc * 11] = d3;
+        data[i + pc * 12] = d4;
+        data[i + pc * 13] = d5;
+        data[i + pc * 14] = d6;
+        data[i + pc * 15] = d7;
     }
 }
 
 // registers X programCount
-void transpose_4x4(uniform float data[], uniform uint32 n) {
+void transpose_8x8(uniform float data[]) {
     // tell the compiler that the data is aligned to target width
-    // note: verify if this is correct later
     assume(((uniform uint64)((void*)data) & (32 * TARGET_WIDTH)-1) == 0);
 
     unmasked {
@@ -94,38 +151,97 @@ void transpose_4x4(uniform float data[], uniform uint32 n) {
         uniform int32 const pc = programCount;
 
         // note: play around with streaming loads/stores
-        float row0 = data[i];
-        float row1 = data[i + pc];
-        float row2 = data[i + pc * 2];
-        float row3 = data[i + pc * 3];
+        float p0 = data[i];
+        float p1 = data[i + pc];
+        float p2 = data[i + pc * 2];
+        float p3 = data[i + pc * 3];
+        float p4 = data[i + pc * 4];
+        float p5 = data[i + pc * 5];
+        float p6 = data[i + pc * 6];
+        float p7 = data[i + pc * 7];
 
         // k = 1
-        float temp0 = _unpack_low(row0, row2);
-        float temp1 = _unpack_low(row1, row3);
-        float temp2 = _unpack_high(row0, row2);
-        float temp3 = _unpack_high(row1, row3);
+        float a0 = _unpack_low(p0, p4);
+        float a1 = _unpack_low(p1, p5);
+        float a2 = _unpack_low(p2, p6);
+        float a3 = _unpack_low(p3, p7);
+        float a4 = _unpack_high(p0, p4);
+        float a5 = _unpack_high(p1, p5);
+        float a6 = _unpack_high(p2, p6);
+        float a7 = _unpack_high(p3, p7);
 
         // k = 2
-        row0 = _unpack_low(temp0, temp1);
-        row2 = _unpack_low(temp2, temp3);
-        row1 = _unpack_high(temp0, temp1);
-        row3 = _unpack_high(temp2, temp3);
+        float b0 = _unpack_low(a0, a2);
+        float b1 = _unpack_low(a1, a3);
+        float b2 = _unpack_low(a4, a6);
+        float b3 = _unpack_low(a5, a7);
+        float b4 = _unpack_high(a0, a2);
+        float b5 = _unpack_high(a1, a3);
+        float b6 = _unpack_high(a4, a6);
+        float b7 = _unpack_high(a5, a7);
 
-        data[i]          = row0;
-        data[i + pc]     = row1;
-        data[i + pc * 2] = row2;
-        data[i + pc * 3] = row3;
+        // k = 3
+        float c0 = _unpack_low(b0, b1);
+        float c1 = _unpack_high(b0, b1);
+        float c2 = _unpack_low(b4, b5);
+        float c3 = _unpack_high(b4, b5);
+        float c4 = _unpack_low(b2, b3);
+        float c5 = _unpack_high(b2, b3);
+        float c6 = _unpack_low(b6, b7);
+        float c7 = _unpack_high(b6, b7);
+
+        data[i]          = c0;
+        data[i + pc]     = c1;
+        data[i + pc * 2] = c2;
+        data[i + pc * 3] = c3;
+        data[i + pc * 4] = c4;
+        data[i + pc * 5] = c5;
+        data[i + pc * 6] = c6;
+        data[i + pc * 7] = c7;
     }
 }
 
-void transpose_generic() {
+// registers X programCount
+void transpose_4x4(uniform float data[]) {
+    // tell the compiler that the data is aligned to target width
+    assume(((uniform uint64)((void*)data) & (32 * TARGET_WIDTH)-1) == 0);
+
+    unmasked {
+        int32 const i = programIndex;
+        uniform int32 const pc = programCount;
+
+        // note: play around with streaming loads/stores
+        float p0 = data[i];
+        float p1 = data[i + pc];
+        float p2 = data[i + pc * 2];
+        float p3 = data[i + pc * 3];
+
+        // k = 1
+        float a0 = _unpack_low(p0, p2);
+        float a1 = _unpack_low(p1, p3);
+        float a2 = _unpack_high(p0, p2);
+        float a3 = _unpack_high(p1, p3);
+
+        // k = 2
+        float b0 = _unpack_low(a0, a1);
+        float b1 = _unpack_high(a0, a1);
+        float b2 = _unpack_low(a2, a3);
+        float b3 = _unpack_high(a2, a3);
+
+        data[i]          = b0;
+        data[i + pc]     = b1;
+        data[i + pc * 2] = b2;
+        data[i + pc * 3] = b3;
+    }
 }
 
 export void transpose_ispc(uniform float data[], uniform uint32 n) {
     #if TARGET_WIDTH == 4
-        transpose_4x4(data, n);
+        transpose_4x4(data);
     #elif TARGET_WIDTH == 8
-        transpose_8x8(data, n);
+        transpose_8x8(data);
+    #elif TARGET_WIDTH == 16
+        transpose_16x16(data);
     #endif
 }
 

@@ -10,4 +10,4 @@ void transpose_ispc(float *data, uint32_t n);
 void transpose_asm(float *data, uint32_t n);
 }
 
-#include "../build/scan_ispc.h"
+#include "../build/transpose_ispc.h"

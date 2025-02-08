@@ -18,7 +18,7 @@ CXXFLAGS="${CXXFLAGS} -O0 -g"
 #CXXFLAGS="${CXXFLAGS} -O3 -march=native"
 
 # debug
-ISPCFLAGS="-O0 -g --arch=x86-64 --target=avx2-i32x8"
+ISPCFLAGS="-O0 -g --arch=x86-64 --target=avx2-i32x4"
 # optimized
 #ISPCFLAGS="-O3 --arch=x86-64 --target=avx2"
 
